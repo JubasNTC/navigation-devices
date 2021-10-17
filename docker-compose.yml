@@ -1,5 +1,7 @@
 version: "3.9"
 
+# nd - navigation devices
+
 services:
   api:
     container_name: nd_api
@@ -16,11 +18,13 @@ services:
       - nd-net
 
   postgres:
-    container_name: nd_pg
+    container_name: nd_postgres
     image: postgres:14
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+      POSTGRES_DATABASE: ${POSTGRES_DATABASE:-nd_db}
+      POSTGRES_DATABASE_HOST: ${POSTGRES_DATABASE_HOST:-nd_postgres}
       PGDATA: /data/postgres
     ports:
       - "5432:5432"
@@ -29,7 +33,7 @@ services:
     restart: unless-stopped
 
   pgadmin:
-    container_name: nd_pg_admin
+    container_name: nd_pgadmin
     image: dpage/pgadmin4
     depends_on:
       - postgres
