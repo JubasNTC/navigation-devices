@@ -4,6 +4,13 @@
 
 <p>API for getting information about navigation devices.</p>
 
+### Required software
+For the application to work correctly, you need to install the following software:
+```
+docker
+docker-compose
+```
+
 ### Pre-setup
 
 Сreate a .env file in the root directory and fill in your data in it, following the example below.
