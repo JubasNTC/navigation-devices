@@ -1,28 +1,28 @@
-require("dotenv").config();
+require('dotenv').config();
 
 module.exports = {
   development: {
     username: process.env.POSTGRES_USER,
     password: process.env.POSTGRES_PASSWORD,
-    database: process.env.POSTGRES_DATABASE,
-    host: process.env.POSTGRES_DATABASE_HOST,
-    dialect: "postgres",
-    operatorsAliases: false,
+    database: process.env.POSTGRES_DB,
+    host: 'postgres',
+    port: 5432,
+    dialect: 'postgres',
   },
   test: {
-    username: process.env.DB_USERNAME,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
-    host: process.env.DB_HOST,
-    dialect: "postgres",
-    operatorsAliases: false,
+    username: process.env.POSTGRES_USER,
+    password: process.env.POSTGRES_PASSWORD,
+    database: process.env.POSTGRES_DB,
+    host: 'postgres',
+    port: 5432,
+    dialect: 'postgres',
   },
   production: {
-    username: process.env.DB_USERNAME,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
-    host: process.env.DB_HOST,
-    dialect: "postgres",
-    operatorsAliases: false,
+    username: process.env.POSTGRES_USER,
+    password: process.env.POSTGRES_PASSWORD,
+    database: process.env.POSTGRES_DB,
+    port: 5432,
+    host: 'postgres',
+    dialect: 'postgres',
   },
 };
