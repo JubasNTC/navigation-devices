@@ -16,7 +16,7 @@ module.exports = {
     } catch (e) {
       console.error(e);
 
-      return res.status(500);
+      return res.status(500).json({ message: e.message });
     }
   },
 

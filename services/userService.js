@@ -28,10 +28,12 @@ class UserService {
    * @return {Promise<Object>} User.
    */
   async getUserById(id) {
-    const user = await User.findOne({
-      where: { id },
-    });
-    console.dir({ user });
+    const user = await User.findByPk(id);
+
+    if (!user) {
+      throw new Error(`user with id: ${id} not found`);
+    }
+
     return user;
   }
 
