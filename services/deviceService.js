@@ -1,6 +1,6 @@
 'use strict';
 
-const { sequelize, Device } = require("models");
+const { sequelize, Device } = require('models');
 
 class DeviceService {
   /**
@@ -14,7 +14,7 @@ class DeviceService {
    * @return {Promise<number>} Device id.
    */
   async createDevice(credential) {
-    const { user_email, mac, type} = credential;
+    const { user_email, mac, type } = credential;
 
     const [row] = await sequelize.query(`
         INSERT INTO public."devices"
@@ -60,12 +60,12 @@ class DeviceService {
       WHERE d."id" = ${id};
     `);
 
-    console.dir({row});
+    console.dir({ row });
 
     const [device] = row;
 
     if (!device) {
-      throw new Error(`device with id: ${id} not found`)
+      throw new Error(`device with id: ${id} not found`);
     }
 
     return device;
@@ -81,9 +81,8 @@ class DeviceService {
   async deleteDeviceById(id) {
     await Device.destroy({
       where: { id },
-    })
+    });
   }
-
 }
 
 const deviceService = new DeviceService();

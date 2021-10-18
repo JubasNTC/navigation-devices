@@ -13,7 +13,9 @@ class UserService {
    * @return {Promise<number>} User id.
    */
   async createUser(credential) {
-    const { dataValues: { id } } = await User.create(credential);
+    const {
+      dataValues: { id },
+    } = await User.create(credential);
 
     return id;
   }
@@ -29,7 +31,7 @@ class UserService {
     const user = await User.findOne({
       where: { id },
     });
-    console.dir({user});
+    console.dir({ user });
     return user;
   }
 
@@ -43,9 +45,8 @@ class UserService {
   async deleteUserById(id) {
     await User.destroy({
       where: { id },
-    })
+    });
   }
-
 }
 
 const userService = new UserService();

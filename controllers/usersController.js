@@ -5,10 +5,12 @@ const validator = require('./usersControllerValidator');
 
 module.exports = {
   getUser: async (req, res) => {
-    const { params: { id } } = req;
+    const {
+      params: { id },
+    } = req;
 
     try {
-      const user = await userService.getUserById(id)
+      const user = await userService.getUserById(id);
 
       return res.status(200).json({ user });
     } catch (e) {
@@ -41,10 +43,12 @@ module.exports = {
   },
 
   deleteUser: async (req, res) => {
-    const { params: { id } } = req;
+    const {
+      params: { id },
+    } = req;
 
     try {
-      await userService.deleteUserById(id)
+      await userService.deleteUserById(id);
 
       return res.sendStatus(200);
     } catch (e) {
@@ -53,5 +57,4 @@ module.exports = {
       return res.sendStatus(500);
     }
   },
-
 };

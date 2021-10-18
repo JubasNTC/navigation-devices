@@ -5,10 +5,12 @@ const validator = require('./devicesControllerValidator');
 
 module.exports = {
   getDevice: async (req, res) => {
-    const { params: { id } } = req;
+    const {
+      params: { id },
+    } = req;
 
     try {
-      const device = await deviceService.getDeviceById(id)
+      const device = await deviceService.getDeviceById(id);
 
       return res.status(200).json(device);
     } catch (e) {
@@ -32,7 +34,7 @@ module.exports = {
     try {
       const id = await deviceService.createDevice(credential);
 
-      return res.status(200).json({id});
+      return res.status(200).json({ id });
     } catch (e) {
       console.error(e);
 
@@ -41,7 +43,9 @@ module.exports = {
   },
 
   deleteDevice: async (req, res) => {
-    const { params: { id } } = req;
+    const {
+      params: { id },
+    } = req;
 
     try {
       await deviceService.deleteDeviceById(id);
@@ -53,5 +57,4 @@ module.exports = {
       return res.sendStatus(500);
     }
   },
-
 };
