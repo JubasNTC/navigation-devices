@@ -3,40 +3,32 @@ version: "3.9"
 # nd - navigation devices
 
 services:
-  api:
-    container_name: nd_api
-    build:
-      context: .
-      dockerfile: Dockerfile
-    depends_on:
-      - postgres
-    environment:
-      PORT: ${API_PORT:-8080}
-    ports:
-      - "${API_PORT:-8080}:8080"
-    networks:
-      - nd-net
-
   postgres:
     container_name: nd_postgres
     image: postgres:14
+    restart: unless-stopped
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     environment:
-      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_USER: ${POSTGRES_USER:-root}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
-      POSTGRES_DATABASE: ${POSTGRES_DATABASE:-nd_db}
-      POSTGRES_DATABASE_HOST: ${POSTGRES_DATABASE_HOST:-nd_postgres}
-      PGDATA: /data/postgres
     ports:
       - "5432:5432"
     networks:
       - nd-net
-    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-root}" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   pgadmin:
     container_name: nd_pgadmin
     image: dpage/pgadmin4
+    restart: unless-stopped
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
@@ -45,7 +37,24 @@ services:
       - "${PGADMIN_PORT:-5050}:80"
     networks:
       - nd-net
-    restart: unless-stopped
+
+  api:
+    container_name: nd_api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-root}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+      POSTGRES_DB: nd_db
+      PORT: ${API_PORT:-8080}
+    ports:
+      - "${API_PORT:-8080}:8080"
+    networks:
+      - nd-net
 
 networks:
   nd-net:
