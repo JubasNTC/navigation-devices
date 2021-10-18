@@ -76,3 +76,7 @@ Deleting device by id
 /api/devices/:id
 method: DELETE
 ```
+
+### TODO
+- Add support swagger
+- Add normal logging 
