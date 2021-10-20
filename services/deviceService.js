@@ -60,8 +60,6 @@ class DeviceService {
       WHERE d."id" = ${id};
     `);
 
-    console.dir({ row });
-
     const [device] = row;
 
     if (!device) {
