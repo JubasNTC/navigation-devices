@@ -18,4 +18,4 @@ USER        node
 
 RUN         chmod +x docker-entrypoint.sh
 
-CMD ["sh", "./docker-entrypoint.sh"]
+CMD         ["sh", "./docker-entrypoint.sh"]
